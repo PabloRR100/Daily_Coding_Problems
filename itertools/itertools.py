@@ -105,16 +105,35 @@ print(valid / total)
 
 
 
+
+
+# groupby() - Compress the String!
+# --------------------------------
+
+from itertools import groupby
+
+input = '1222311'
+groups = groupby(list(input))
+
+ls = list()
+for k,g in groups:
+    ls.append((len(list(g)), int(k)))
+    #   ls.append((list(g), int(k))) to visualize what's inside g
+    
+print(*ls)
+
+# One line solution:
+print(*[(len(list(c)), int(k)) for k, c in groupby(input)])
+
+
+
+
+
+
 # Maximize it!
 # ------------
 
-#input1 = map(int, '3 1000'.split(' '))
-#input2 = max(map(int, '2 5 4'.split(' ')))
-#input3 = max(map(int, '3 7 8 9 '.split(' ')))
-#input4 = max(map(int, '5 5 7 8 9 10 '.split(' ')))
-
 K, M = map(int, '3 1000'.split(' '))
-
 input = ['2 5 4', 
          '3 7 8 9', 
          '5 5 7 8 9 10']
@@ -124,11 +143,6 @@ for i in range(K):
     total += max(map(int, input[i].split(' '))) ** 2
 
 print(total % M)
-
-
-
-
-
 
 
 
