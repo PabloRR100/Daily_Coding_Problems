@@ -1,77 +1,142 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 @title: CleanBot
 @author: pablorr10
 """
 
-n = 5
-grid = ['----d',
-        '-d--d',
-        '--dd-',
-        '--d--',
-        '----d']
 
+def print_grid(grid):
+    print('\n')
+    for row in grid:
+        print(row)
 
-def is_dirty_left(grid, n):
+def replace_cell(r, c, v):
+    row = list(grid[r])
+    row[c] = v
+    return ''.join(row)
+     
+
+def find_me(grid):
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 'b':
+                return r,c
     
-    a = 0
-    [a+=1 for i in range(n) for j in range(n) if 'd' in grid[j][i]][0]
-    return a > 0
+def is_dirty_left():
+    return any([[c == 'd' for c in row ] for row in grid])
 
-def is_dirty(r, c, grid):
-    
-    if grid[r,c] == 'd': return True
+
+def is_dirty(r, c):    
+    if grid[r][c] == 'd': return True
     else: return False
         
-
-def next_move(posr, posc, board):
     
-    next_move = ''
-
-    # Find the next move
-    while p1 != posr or p2 != posc:
-        
-        # Check we are not in a dirty spot
-        if is_dirty(posr, posc, grid):
-                    
-                    grid[posr, posc].replace('d', '-')
-                    next_move = 'CLEAN'
-                    break 
-        
-        if p1 != posr:
-            
-            if p1 < posr: # Princess is higher
-                
-                
-                posr += 1
-                next_move = 'UP'
-                break
-            
-            else: # Princess is lower
-                
-                posr -= 1
-                next_move = 'DOWN'
-                break
-                
-        if p2 != posc:
-            
-            if p2 < posc: # Princess is left
-                
-                posc -= 1
-                next_move = 'LEFT'
-                break
-                
-            else: # Princess is right
-                
-                posc += 1
-                next_move = 'RIGHT'
-                break
+def distances_to_drity(r, c):
     
-    return next_move
+    def distance(rd, cd):
+        # return moves to reach 'd'
+        return int(abs(rd-r) + abs(cd-c))
+        
+    dists = dict()
+    for rd in range(rows):
+        for cd in range(cols):
+            if not (rd == r and cd == c):
+                if is_dirty(rd, cd):
+                    dists[str(rd) + '-' + str(cd)] =  distance(rd, cd)
+    return dists
 
-print(next_move(1,1,grid))
 
-pos = [int(i) for i in input().strip().split()]
-board = [[j for j in input().strip()] for i in range(5)]
-next_move(pos[0], pos[1], board)
+def find_closest_dirty(r,c):
+    
+    ds = distances_to_drity(r,c)
+    r,c = min(ds, key=ds.get).split('-')
+    return int(r), int(c)
+    
+    
+def get_best_move(r,c):
+    
+    rd, cd = find_closest_dirty(r,c)
+    d_hor, d_ver = abs(rd-r), abs(cd-c)
+    best = 0 if d_hor > d_ver else 1
+    
+    print('Closest dirt is at ({},{})'.format(rd,cd))
+    print('The distance is: ({},{})'.format(d_hor, d_ver))
+    if best == 0:
+        if (rd - r) > 0: 
+            return 'RIGHT'
+        else: 
+            return 'LEFT'
+    if best == 1:
+        if (cd - c) > 0: 
+            return 'DOWN'
+        else: 
+            return 'UP'
+
+
+def next_move(posr, posc):
+
+    # Clean if we are in a dirty spot
+    if is_dirty(posr, posc):                
+        move = 'CLEAN'
+    
+    # Move otherwise
+    else:
+        
+        # Find best move to closest dirty spot 
+        move = get_best_move(posr, posc)
+        
+    print('Then we should move: ', move)
+    return move
+
+
+def update_board(board, move, r, c):
+    
+    if move == 'CLEAN':
+        board[r] = replace_cell(r, c, '-')
+        
+    if move == 'UP':
+        board[r] = replace_cell(r, c, '-')
+        board[r-1] = replace_cell(r-1, c, 'b')
+        
+    if move == 'DOWN':
+        board[r] = replace_cell(r, c, '-')
+        board[r+1] = replace_cell(r+1, c, 'b')
+        
+    if move == 'LEFT':
+        board[r] = replace_cell(r, c, '-')
+        board[r] = replace_cell(r, c-1, 'b')
+        
+    if move == 'RIGHT':
+        board[r] = replace_cell(r, c, '-')
+        board[r-1] = replace_cell(r-1, c+1, 'b')
+        
+    return board
+
+
+
+if __name__ == '__main__':
+
+        grid = ['----d',
+                '-d--d',
+                '--dd-',
+                '--d--',
+                '----d']
+        
+        init = 0,0
+        rows = len(grid)
+        cols = len(grid[0])
+        
+        r, c = init[0], init[1]
+        grid[r] = replace_cell(r, c, 'b')
+
+        print_grid(grid)
+        while is_dirty_left():
+            
+            move = next_move(r,c)
+            grid = update_board(grid, move, r, c)
+            r,c = find_me(grid)
+            print_grid(grid)
+            
