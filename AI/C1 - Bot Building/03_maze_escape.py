@@ -20,6 +20,29 @@ def find_me():
             if maze[r][c] == 'b':
                 return r,c
 
+def update_board(move, pointer):
+
+    if pointer == 'UP':
+        if move == 'UP:
+            
+        
+    if move == 'UP':
+        board[r] = replace_cell(r, c, '-')
+        board[r-1] = replace_cell(r-1, c, 'b')
+        
+    if move == 'DOWN':
+        board[r] = replace_cell(r, c, '-')
+        board[r+1] = replace_cell(r+1, c, 'b')
+        
+    if move == 'LEFT':
+        board[r] = replace_cell(r, c, '-')
+        board[r] = replace_cell(r, c-1, 'b')
+        
+    if move == 'RIGHT':
+        board[r] = replace_cell(r, c, '-')
+        board[r] = replace_cell(r-1, c+1, 'b')
+        
+
 def visibility(r,c):
     return [v[c-1:c+2] for v in maze[r-1:r+2]]
 
@@ -43,28 +66,43 @@ def observe(r,c,pointer):
         view.reverse()
         view = [v[::-1] for v in view]
         
-    #print_view(view)
     return view
+
+def see_exit(view):
+    return any([ [ True for cell in row if cell == 'e' ] for row in view ])
+
+def distance_to_exit(view):
+    for ri, row in enumerate(view):
+        for ci, v in enumerate(row):
+            if 'e' == v:
+                return ri, ci
+            
+def move_towards_exit(view):
+
 
 if __name__ == '__main__':
      
     maze = ['#######',
-            '#--#-b#',
             '#--#--#',
             '#--#--#',
+            '#b-#--#',
             'e-----#',
             '#-----#',
             '#######']
          
-    pointer = 'UP'
+    pointer = 'RIGHT'
     rows, cols = len(maze), len(maze[0])
     r,c = find_me()
-            
+    
+    # while NOT SOLVED:
+    
+    # Make observation        
     view = observe(r,c,pointer)
     
-    
-    
-    
-    
+    # Decide move
+    if see_exit(view):
+
+        distance_to_exit(view)
+        
     
     
