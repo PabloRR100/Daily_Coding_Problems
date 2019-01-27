@@ -8,3 +8,17 @@ https://www.hackerrank.com/challenges/maze-escape?hr_b=1
 """
 
 
+
+
+
+if __name__ == '__main__':
+     
+    maze = ['#######',
+            '#--#-b#',
+            '#--#--#',
+            '#--#--#',
+            'e-----#',
+            '#-----#',
+            '#######']
+            
+    
