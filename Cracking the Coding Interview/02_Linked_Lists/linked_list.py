@@ -35,7 +35,7 @@ class LinkedList:
         self.head = None
         self.tail = None
         if values is not None:
-            self.add_multiples(values)
+            self.add_multiple(values)
             
     def __iter__(self):
         current = self.head
@@ -56,6 +56,7 @@ class LinkedList:
         return counter
             
     def add(self, value):
+        ''' Creates a new node, add it to the tail, and returns the created node '''
         # Case new list
         if self.head is None:
             self.head = self.tail = Node(value)
@@ -66,6 +67,7 @@ class LinkedList:
         return self.tail
     
     def add_to_beginning(self, value):
+        ''' Creates a new node, add it to the head, and returns the created node '''
         # Case new list
         if self.head is None:
             self.head = self.tail = Node(value)
@@ -79,13 +81,14 @@ class LinkedList:
             self.add(value)
 
     def generate(self, n, min_value, max_value):
+        ''' Create a populated linked list and returns the LinkedList object'''
         self.head = self.tail = None
         for i in range(n):
             self.add(randint(min_value, max_value))
         return self
 
 
-class DoubleLinedList(LinkedList):
+class DoubleLinkedList(LinkedList):
     
     def add(self, value):
         # Case new list

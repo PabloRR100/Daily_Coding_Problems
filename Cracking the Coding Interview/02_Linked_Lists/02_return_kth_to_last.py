@@ -19,7 +19,7 @@ def k_to_last(l, k):
             return None
         # Otherwise
         runner = runner.next
-        
+         
     # Once there, move together current and runner until runner reaches the end
     while runner is not None:
         current = current.next
