@@ -15,97 +15,88 @@ Insertion:
 
 """
 
+from random import randint
+
 
 class Node:
     
-    def __init__(self, data=None):
+    def __init__(self, data=None, next = None, prev = None):
         self.data = data
         self.next = None
+        self.prev = None
+        
+    def __str__(self):
+        return str(self.data)
+
 
 class LinkedList:
     
-    def __init__(self):
+    def __init__(self, values=None):
         self.head = None
-        
-    def AtBegining(self, newdata):
-        NewNode = Node(newdata)
-        NewNode.next = self.head
-        self.head = NewNode
-        
-    def AtEnd(self, newdata):
-        NewNode = Node(newdata)
-        # Case empty list
-        if self.head is None:
-            self.head = NewNode
-            return
-        # Iterate all list until the end
-        last = self.head
-        while last.next is not None:
-            last = last.next
-        last.next = NewNode
-        
-    def InBetween(self, prenode, newdata):
-        # Case prenode not in list
-        if prenode is None:
-            print('Node is absent')
-            return
-        # Interchange references
-        NewNode = Node(newdata)
-        NewNode.next = prenode.next
-        prenode.next = NewNode
-        
-    def RemoveNode(self, key):
-        
-        # Case remove head
-        if self.head is not None:
-            if self.head.data == key:
-                self.head = self.head.next
-                return
+        self.tail = None
+        if values is not None:
+            self.add_multiples(values)
             
-        # Case iterate the list
-        val = self.head
-        while val is not None:
-            if val.data == key:
-                break
-            prev = val
-            val = val.next
+    def __iter__(self):
+        current = self.head
+        while current is not None:
+            yield current # returns a generator
+            current = current.next
             
-        # Case there is no list
-        if self.head == None:
-            return
-        
-        prev.next = val.next
-                
-    
-    def print_(self):
+    def __str__(self):
         print('\n\nList Status:')
+        return ' -> '.join([str(x) for x in self])
+    
+    def __len__(self):
+        counter = 0
         node = self.head
         while node is not None:
-            print(node.data)
+            counter += 1
             node = node.next
-             
-ls = LinkedList()
-ls.head = Node('Lunes')
+        return counter
+            
+    def add(self, value):
+        # Case new list
+        if self.head is None:
+            self.head = self.tail = Node(value)
+        # Case populated list
+        else:
+            self.tail.next = Node(value)
+            self.tail = self.tail.next
+        return self.tail
+    
+    def add_to_beginning(self, value):
+        # Case new list
+        if self.head is None:
+            self.head = self.tail = Node(value)
+        # Case populated list
+        else:
+            self.head = Node(value, next = self.head)
+        return self.head
+    
+    def add_multiple(self, values):
+        for value in values:
+            self.add(value)
 
-e2 = Node('Martes')
-e3 = Node('Miercoles')
+    def generate(self, n, min_value, max_value):
+        self.head = self.tail = None
+        for i in range(n):
+            self.add(randint(min_value, max_value))
+        return self
 
-# Link first node to second node
-ls.head.next = e2
 
-# Link second node to third node
-e2.next = e3
+class DoubleLinedList(LinkedList):
+    
+    def add(self, value):
+        # Case new list
+        if self.head is None:
+            self.head = self.tail = Node(value, None, self.tail)
+        # Case populated list
+        else:
+            self.tail.next = Node(value)
+            self.tail = self.tail.next
+        return self
+    
+    
 
-ls.print_()
-
-ls.AtBegining('Domingo')
-ls.print_()
-
-ls.AtEnd('Viernes')
-ls.print_()
-
-ls.InBetween(ls.head.next.next.next, 'Jueves')
-ls.print_()
-
-ls.RemoveNode('Domingo')
-ls.print_()
+    
