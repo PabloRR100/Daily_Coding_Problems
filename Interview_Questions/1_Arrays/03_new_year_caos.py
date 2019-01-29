@@ -19,19 +19,21 @@ def NewYearChaos(queue):
     
     def swap(x,y):
         return y,x
-    
+
     # check if the queue is too chaotic
     # a number can't be more than two positions away from its index
     for i, v in enumerate(queue):
         if (v - 1) - i > 2:
             return "Too chaotic"
-        
+    
+    print('Origin: {}'.format(queue))        
     # bubble sorting to find the answer
     for i in range(0, lastIndex):
         for j in range(0, lastIndex):
             comps += 1
             if queue[j] > queue[j+1]:
                 queue[j], queue[j+1] = swap(queue[j], queue[j+1])
+                print('Swap {}: {}'.format(comps, queue))
                 swaps += 1
                 swaped = True
         
