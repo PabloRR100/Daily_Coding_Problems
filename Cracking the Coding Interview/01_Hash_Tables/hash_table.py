@@ -119,7 +119,7 @@ class ResizableHashTable(HashTable):
         super().__init__(self.MIN_SIZE)
     
     def put(self, key, value):
-        rv = super().put(key,value)
+        super().put(key,value)
         if len(self) >= 2/3 * self.size:
             self.__resize()
             
@@ -136,26 +136,28 @@ class ResizableHashTable(HashTable):
             if k is not self._empty and k is not self._deleted:
                 self.put(k,v)
 
-table = HashTable()    
-table.put(332, 22)
-
-table._keys
-table._values
-
-
-table = ResizableHashTable()
-
-table.put(332, 22)
-print(table._keys)
-print(table._values)
-
-table.put(332, 26)
-print(table._keys)
-print(table._values)
-
-import random
-for _ in range(34):
-    table.put(random.randint(1,100), random.randint(1,100))
+if '__name__' == '__main__':
     
-table._keys
-table._values
+    table = HashTable()    
+    table.put(332, 22)
+    
+    table._keys
+    table._values
+    
+    
+    table = ResizableHashTable()
+    
+    table.put(332, 22)
+    print(table._keys)
+    print(table._values)
+    
+    table.put(332, 26)
+    print(table._keys)
+    print(table._values)
+    
+    import random
+    for _ in range(34):
+        table.put(random.randint(1,100), random.randint(1,100))
+        
+    table._keys
+    table._values
