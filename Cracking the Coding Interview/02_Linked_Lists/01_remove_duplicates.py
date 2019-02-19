@@ -24,6 +24,7 @@ Q2 - Repeat the exercise with the constraint of not using a buffer:
 
 from linked_list import LinkedList
 
+
 def remove_dups(l, verbose=0):
     
     # Case empty list 
@@ -55,20 +56,30 @@ def remove_dups_followup(ll, verbose=0):
     # Case populated list
     current = ll.head
     while current:
+        
+        # Start the runner
         a_current = current.data
         runner = current
         while runner.next:
             b_runner = runner.next.data
+            
+            # If runner.next finds a duplicate
             if runner.next.data == current.data:
                 if runner.next.next is not None:
                     if verbose == 1:
                         print('Found duplicated')
                         print('Changing Runner {} -> {}'.format(runner.next.data, runner.next.next.data))
+                        
+                    # Remove Node from LinkedList
                     c_new_runner = runner.next.next.data
                 else:
                     if verbose == 1:
                         print('End of list reached')
+                
+                # And keep moving the runner 
                 runner.next = runner.next.next
+            
+            # Else keep moving the runner
             else:
                 if runner.next is not None:
                     if verbose == 1:
@@ -81,6 +92,8 @@ def remove_dups_followup(ll, verbose=0):
                 runner = runner.next
         
         if verbose == 1:
+            
+            # Move the current
             if current.next is not None:
                 print('\n\nChanging current {} -> {}'.format(current.data, current.next.data))
             else:
@@ -92,15 +105,11 @@ def remove_dups_followup(ll, verbose=0):
     return ll.head
 
 
-
 # Q1 - Remove duplicates
 ll = LinkedList()
 ll.generate(100,0,9)
+remove_dups(ll, verbose=0)
 print(ll)
-
-remove_dups(ll, verbose=1)
-print(ll)
-
 
 
 # Q2 - Follow up - No buffer allowed
@@ -112,3 +121,4 @@ print(z)
 print('Removing duplicates... \n')
 a = remove_dups_followup(ll, verbose=1)
 print(ll)
+

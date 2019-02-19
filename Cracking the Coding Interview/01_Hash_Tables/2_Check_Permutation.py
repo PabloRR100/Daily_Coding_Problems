@@ -10,7 +10,6 @@ Counter is a HashTable optimized to keep track of the appearances
 
 import unittest
 from collections import Counter
-from hash_table import HashTable
 
 
 def check_permutation(s1, s2):
