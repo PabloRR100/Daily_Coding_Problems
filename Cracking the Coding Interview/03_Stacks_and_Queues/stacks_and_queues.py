@@ -32,6 +32,11 @@ class Stack:
         self.stack = self.stack[1:]
         self.size -= 1
         return val
+    
+    def Peek(self):
+        if self.IsEmpty():
+            raise Exception('Stack is empty')
+        return self.stack[self.size]
         
     def IsEmpty(self):
         return self.size == 0
@@ -39,12 +44,40 @@ class Stack:
     def IsFull(self):
         return self.size == self.stacksize
     
+    
+class Queue:
+    
+    def __init__(self, queuesize):
+        self.size = 0
+        self.queue = list() 
+        self.maxsize = queuesize
+            
+    def __str__(self):
+        return '[' + ', '.join([str(x) for x in self.queue]) + ']'
+        
+    def Add(self, item):
+        if self.size == self.maxsize:
+            raise Exception('Cant add - Queue is Full')
+        self.size += 1
+        self.queue.append(item)
+        
+    def Remove(self):
+        if self.size == 0:
+            raise Exception('Cant remove - Queue is Empty')
+        self.queue = self.queue[1:]
+        
+    def Peek(self):
+        if self.size == 0:
+            raise Exception('Queue is Empty')
+        return self.queue[0]
+
 
 if __name__ == '__main__':
     
-    stack = Stack(stacksize=20)
-    
     from random import randint
+    
+    # Stacks
+    stack = Stack(stacksize=20)
     for _ in range(19):
         stack.Push(randint(1,9))
     print(stack)
@@ -54,7 +87,17 @@ if __name__ == '__main__':
     
     for _ in range(5):
         stack.Push(randint(1,9))
-    
-    
+        
     for _ in range(21):
         stack.Pop()
+
+    # Queues
+    queue = Queue(queuesize=20)
+    for _ in range(19):
+        queue.Add(randint(1,9))
+    print(queue)
+    
+    queue.Remove()
+    print(queue)
+    
+    queue.Peek()
