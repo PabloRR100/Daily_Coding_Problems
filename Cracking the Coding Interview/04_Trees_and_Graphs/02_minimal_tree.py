@@ -6,7 +6,7 @@
     create a Binary Search Tree with minimal height
 """
 
-from trees_and_graphs import Node
+from trees_and_graphs import TreeNode as Node
 
 def assign_values(array):
     
