@@ -30,7 +30,7 @@ from trees_and_graphs import Node, Graph, Graph_AdjList
 ### Graph as a collection of nodes
 # --------------------------------
 
-example = 'long'
+example = 'short'
 
 if example == 'short':
     vertices = [0,1,2,3,4,5]
@@ -157,21 +157,31 @@ def BFS_(graph:Graph, root:Node, goal:Node):
 
     stack = [root]
     visited[root] = True 
+    path_explored = [root]
         
     while stack:
         
+        print('Stack', stack)
         node = stack.pop()
-        if node == goal: print('Path found!'); return True
+        
+        print('Current', node)
+        
+        if node == goal: 
+            print('Path found!'); print('Path explored: ', path_explored); return True
         for n in graph.nodes[node]:
             
-            print('Moving {} -> {}'.format(node, n))            
             if visited[n] == False:
                 visited[n] = True
                 stack.append(n)
+                path_explored.append(n)
                 
+    print('Path explored: ', path_explored)
     return False
 
+if example == 'short':
+    BFS_(graph_adjL, 0, 3) # 1 -> 6: True
 
-BFS_(graph_adjL, 1, 6) # 1 -> 6: True
+    
+    
 BFS_(graph_adjL, 9, 7) # 9 -> 7: False
 BFS_(graph_adjL, 8, 5) # 8 -> 5: True
