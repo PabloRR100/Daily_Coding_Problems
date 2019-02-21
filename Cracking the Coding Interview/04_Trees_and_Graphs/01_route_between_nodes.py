@@ -102,18 +102,58 @@ if example == 'long':
 
 ## Breadth First Search for a collection of nodes
 
-def BFS(root:Node, destiny:Node):    
-    pass
+def BFS(root:Node, goal:Node):    
+    
+    print('\n\nBreadth First Search\n')
+    if root == goal: print('Path found!'); return
+    
+    queue = [root]
+    
+    while queue:
+        
+        print('Queue {}'.format([x.name for x in queue]))
+        current = queue.pop()
+        print('Queue {} -> Current {}'.format([x.name for x in queue], current.name))
+        if current == goal: print('Path found!'); return True
+        
+        print('Adjacents {}'.format([n.name for n in current.adjacents]))
+        for n in current.adjacents:
+            if not n.visited:
+                queue.insert(0,n)
+                n.visited = True
+                
+    print('Path not found')
+    return False
+
+
+if example == 'short':
+    graph = create_graph(vertices, connections)
+    BFS(graph.nodes[1], graph.nodes[5]) # B -> S: True   for short example
+    
+    graph = create_graph(vertices, connections)
+    BFS(graph.nodes[4], graph.nodes[5]) # E -> S: True
+    
+    graph = create_graph(vertices, connections)
+    BFS(graph.nodes[3], graph.nodes[5]) # D -> S: False
+
+
+if example == 'long':
+    graph = create_graph(vertices, connections)
+    BFS(graph.nodes[1], graph.nodes[6]) # 1 -> 6: True
+    
+    graph = create_graph(vertices, connections)
+    BFS(graph.nodes[9], graph.nodes[7]) # 9 -> 7: False
+    
+    graph = create_graph(vertices, connections)
+    BFS(graph.nodes[8], graph.nodes[5]) # 8 -> 5: True
+
+
 
 
 
 
 ### Graph as an Adjacent List
 # ---------------------------    
-
-#vertices = ['A','B','C','D','E','S']
-#connections = [('A', 'B'),('A','C'),('B','D'),('B','E'),('E','C'),('C','S')]
-
 
 def create_graph_AdjList(vertices, connections):
     graph_adjL = Graph_AdjList(len(vertices))
@@ -205,3 +245,8 @@ if example == 'long':
     BFS_(graph_adjL, 1, 6) # 1 -> 6: True
     BFS_(graph_adjL, 9, 7) # 9 -> 7: False
     BFS_(graph_adjL, 8, 5) # 8 -> 5: True  --> Another great example of searching too much
+
+
+
+
+
