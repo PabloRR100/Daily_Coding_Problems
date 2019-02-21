@@ -23,7 +23,7 @@ def selection_sort(array):
         return arr
     
     def find_min(arr):
-        idx = None
+        idx = None 
         min_ = math.inf
         for i,v in enumerate(arr):
             if v < min_:
