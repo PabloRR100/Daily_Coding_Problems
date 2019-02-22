@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Given an array, find the unique element that is repeted an odd number of times
-"""
-
-
 array = [2,3,4,5,5,3,1,2,4]
 
 def findOdd(arr):

@@ -9,12 +9,12 @@ Selection sort
 
 import sys
 sys.path.append('..')
-from utils import timeit
+#from utils import timeit
 
 import math
 
-@timeit
-def selection_sort(array):
+#@timeit
+def quick_sort(array):
     
     def swap_to_front(arr, j):
         temp = arr[j]
@@ -40,11 +40,11 @@ def selection_sort(array):
 
 import random
 sample = [random.randint(0,30) for _ in range(30)]      # N=30 -> t=0.06
-sorted_array = selection_sort(sample.copy())
+sorted_array = quick_sort(sample.copy())
 
 sample = [random.randint(0,300) for _ in range(300)]    # N=300 -> t=2.66 (x44)
-sorted_array = selection_sort(sample.copy())
+sorted_array = quick_sort(sample.copy())
 
 sample = [random.randint(0,3000) for _ in range(3000)]  # N=3000 -> t=306.67 (x115) (x5000)
-sorted_array = selection_sort(sample.copy())
+sorted_array = quick_sort(sample.copy())
 
