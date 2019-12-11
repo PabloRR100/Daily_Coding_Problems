@@ -1,7 +1,7 @@
 
 arr = [42,56,14]
 
-# Naive Implementation
+# My Approach
 
 def get_divisors(n):
     i = 2
@@ -27,3 +27,27 @@ def find_common_divisor(arr):
 
 find_common_divisor(arr)
 
+
+# Efficient Approach
+''' Associative property
+gcd(a,c,b) = gcd(a,gcd(b,c))
+'''
+
+def gcd(arr):
+    n = arr[0]
+    for num in arr[1:]:
+        n = _gcd(n,num)
+
+# Naive
+def _gcd_naive(a, b):
+    smaller, larger = min(a, b), max(a, b)
+    for d in range(smaller, 0, -1):
+        if larger % d == 0:
+            return d
+
+# Efficient method: Euclidean Algorithm
+''' Follows the recursive formula
+gcd(a,0) = a
+gca(a,b) = gca(b,a%b)
+
+'''
