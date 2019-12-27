@@ -15,34 +15,63 @@ class Node:
         self.value = value
         self.next = None
 
-ll = [5,1,8,0,3]
-l = Node(ll[0])
-nodes = [l]
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
 
-current = l
-for n in ll[1:]:
-    node = Node(n)
-    current.next = node
-    current = current.next    
-    nodes.append(node)
+    def insert(self, data):
+        if not self.head:
+            self.head = self.tail = Node(data)
+        else:
+            temp = Node(data)
+            temp.next = self.head
+            self.head = temp
 
-def print_list(ll):
-    while ll is not None:
-        print(ll.value)
-        ll = ll.next
-    return
+    def append(self, data):
+        if not self.head:
+            self.head = self.tail = Node(data)
+        else:
+            temp = Node(data)
+            self.tail.next = temp
+            self.tail = self.tail.next
 
-print_list(l)
+def printLL(head):
+    vals = list()
+    while head is not None:
+        vals.append(head.value)
+        head = head.next
+    return '->'.join(map(str,vals))
 
-K = 3
+'''
+we can solve this in a simple way: 
+as we traverse the input list:
+    - we insert elements whose value is less than k into our new linked list
+    - and append everything else
+'''
 
-import copy
-l2 = copy.deepcopy(l)
-cur = l2
-while cur.next is not None:    
-    l2.value, l2.next.value = cur.next.value, cur.value
-    cur = cur.next
+pivot = 3
+values = [5,1,8,0,3]
+original = LinkedList()
+for v in values:
+    original.append(v)
 
-print_list(l2)
+print('ORIGINAL')
+printLL(original.head)
 
+def partition(head, pivot):
+    new = LinkedList()
+
+    while head:
+        if head.value < pivot:
+            new.insert(head.value)
+        else:
+            new.append(head.value)
+        head = head.next
+
+    return new
+
+new = partition(original.head, pivot)
+print('NEW')
+printLL(new.head)
 
