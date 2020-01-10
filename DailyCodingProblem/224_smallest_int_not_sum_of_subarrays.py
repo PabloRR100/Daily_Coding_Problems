@@ -10,18 +10,28 @@ For example, for the input [1, 2, 3, 10], you should return 7.
 Do this in O(N) time.
 '''
 
-def smallest_int_not_in_subarray_sums(array):
-    impossible_sum = 1
-    for n in array:
-        if n > impossible_sum:
-            break
-        else:
-            impossible_sum += n
-    return impossible_sum
+def last_survivor_position(N,k):
+    
+    cur = 1
+    arr = list(range(1,1+N))
+    print(arr)
+    
+    while len(arr) > 1:
+        
+        if cur > len(arr)-1:
+            cur -= len(arr)
 
-nums = [1,6,7,8,9]
-nums = [1,2,3,10]
-smallest_int_not_in_subarray_sums(nums)
+        arr = arr[:cur] + arr[cur+1:]
+
+        cur += k - 1
+        print(arr)
+
+    return arr[0]
+
+last_survivor_position(5,2)
+
+
+
     
     
     
