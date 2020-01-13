@@ -1,48 +1,65 @@
 
 '''
-This problem was asked by Airbnb.
+This problem was asked by Facebook.
 
-You come across a dictionary of sorted words 
-in a language you've never seen before. 
-
-Write a program that returns the correct order of letters in this language.
-
-For example, given ['xww', 'wxyz', 'wxyw', 'ywx', 'ywz'], 
-you should return ['x', 'z', 'w', 'y'].
+Boggle is a game played on a 4 x 4 grid of letters. 
+The goal is to find as many words as possible that 
+can be formed by a sequence of adjacent letters in the grid, 
+using each cell at most once. Given a game board and a 
+dictionary of valid words, implement a Boggle solver.
 '''
 
-words = ['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']
+grid = [["a", "b", "c", "d"],
+        ["x", "a", "y", "z"],
+        ["t", "z", "r", "r"],
+        ["s", "q", "q", "q"]]
+
+dictionary = ['bat', 'car', 'cat']
 
 
-# Create rules 'letter' -> 'letters that must go after it'
+# Function to bring all neighborss
+def get_neighbors(cell, grid_size=4):
+    i,j = cell
+    potential_neighs = [
+        (i-1,j-1), (i-1,j), (i-1,j+1),
+        (i,j-1), (i,j+1),
+        (i+1,j-1), (i+1,j), (i+1,j+1)
+    ]
 
-letters = set(''.join(words))
-rules = {l:[] for l in letters}
+    def is_valid(i,j): 
+        return 0<=i<grid_size and 0<=j<grid_size
 
-for pair in zip(words, words[1:]):
-    for before, after in zip(*pair):
-        if before != after:
-            rules[before].append(after)
-            break
+    return [n for n in potential_neighs if is_valid(*n)]
 
+# get_neighbors((0,2))
 
-# Combine the rules doing a topological traversal of a graph
+# Traverse graph and store word if exists, given a starting cell
+def search(cell:tuple, grid:list, visited:set, word:str, results:set, dictionary:list):
+    visited.add(cell)
+    if word in dictionary:
+        results.add(word)
 
-def visit(letter, rules, visited, order):
-    visited.add(letter)
-    for next_letter in rules[letter]:
-        if next_letter not in visited:
-            visit(next_letter, rules, visited, order)
-    order.append(letter)
+    for n in get_neighbors(cell):
+        if n not in visited:
+            word += grid[n[0]][n[1]]
+            # step in
+            search(n, grid, visited, word, results, dictionary)
+            # step back
+            word = word[:-1]
+            visited.remove(n)
 
-def traverse(rules):
-    order = list()
+# Run a search for every possible starting location
+def play(grid, dictionary):
     visited = set()
-    for letter in letters:
-        if letter not in visited:
-            visit(letter, rules, visited, order)
-    return list(order)
+    results = set()
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            word = grid[row][col]
+            search((row,col), grid, visited, word, results, dictionary)
+    return list(results)
 
 
-print(traverse(rules))
+play(grid, dictionary)
+
+
 
