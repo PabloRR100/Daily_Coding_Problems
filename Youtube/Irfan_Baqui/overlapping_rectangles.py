@@ -27,3 +27,4 @@ r2 = [(3,0),(4,2)]
 input = [r1, r2]
 
 overlapping_area(input)
+
