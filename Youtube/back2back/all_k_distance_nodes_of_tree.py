@@ -32,34 +32,37 @@ n5.r = n7
 n4.r = n8
 n7.l = n9
 
+''' EXTRA PART: LEVEL TRAVERSAL OF TREES '''
 
 def level_order_traversal(n:Node):
 
     queue = deque([n])
     stack = list()
-
     while len(queue) > 0:
-
         n = queue[0]
-
         if n.l:
             queue.append(n.l)
         if n.r:
             queue.append(n.r)
-        
         stack.append(queue.popleft())
-
     return stack
 
 
 def reversed_level_order_traversal(n:Node):
-
     stack = level_order_traversal(n)
     stack_ = list()
     while stack:
         stack_.append(stack.pop())
     return stack_
 
+# Check they are right
 ', '.join([str(n.v) for n in level_order_traversal(n1)])
 ', '.join([str(n.v) for n in reversed_level_order_traversal(n1)])
+
+
+''' MAIN PART 
+
+Now we want to transform the tree to a graph, so all nodes at 
+K distance is a breadth-first-search for a depth of K
+'''
 
