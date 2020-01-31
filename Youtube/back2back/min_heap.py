@@ -44,6 +44,7 @@ class MinHeap:
             return self.get_last(n.right)
 
     def restore(self, node1, node2):
+        if
 
 
     def insert(self, node):
