@@ -23,6 +23,22 @@ items = {
     2: dict(w=3, v=4),
     3: dict(w=4, v=5),
     4: dict(w=5, v=7)}
+max_value(items, max_weight)
 
+max_weight = 5
+items = {
+    1: dict(w=2, v=30),
+    2: dict(w=4, v=70),
+    3: dict(w=3, v=50),
+    4: dict(w=5, v=60)}
+max_value(items, max_weight)
+
+
+max_weight = 5
+items = {
+    1: dict(w=5, v=60),
+    2: dict(w=3, v=50),
+    3: dict(w=4, v=70),
+    4: dict(w=2, v=30)}
 max_value(items, max_weight)
 
