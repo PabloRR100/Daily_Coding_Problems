@@ -27,3 +27,4 @@ print(n_permutations('abcd'))
 '''
 2 - Calculate the next permutation if the string represents a number
 '''
+
