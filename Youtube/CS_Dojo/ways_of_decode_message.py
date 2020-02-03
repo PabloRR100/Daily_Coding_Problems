@@ -29,3 +29,4 @@ def n_ways(msg:str):
         return n_ways(msg[1:]) + n_ways(msg[2:])
 
 n_ways(input)
+
