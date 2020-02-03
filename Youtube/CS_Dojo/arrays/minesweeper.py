@@ -6,8 +6,8 @@ def minesweeper(bombs,n,m):
     for (i,j) in bombs:
         t[i][j] = -1
     # Place numbers
-    for i in range(n-1):
-        for j in range(m-1):
+    for i in range(n):
+        for j in range(m):
             if t[i][j] == -1:
                 continue
             b = 0
@@ -29,3 +29,10 @@ minesweeper([[0, 2], [2, 0]], 3, 3)
 # [[0, 1, -1],
 #  [1, 2, 1],
 #  [-1, 1, 0]]
+
+minesweeper([[1, 1], [1, 2], [2, 2], [4, 3]], 5, 5)
+# [[1, 2, 2, 1, 0],
+#  [1, -1, -1, 2, 0],
+#  [1, 3, -1, 2, 0],
+#  [0, 1, 2, 2, 1],
+#  [0, 0, 1, -1, 1]]
